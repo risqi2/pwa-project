@@ -1,6 +1,10 @@
-import { Container, Stack, Box, Button } from "@mui/material";
+import { Container, Stack, Box, Button, Typography } from "@mui/material";
 import React from "react";
 import BackspaceIcon from '@mui/icons-material/Backspace';
+
+import {create,all} from 'mathjs'
+const config = {}
+const math = create(all,config)
 
 const buttons = [
     [
@@ -139,7 +143,71 @@ const buttons = [
 
 
 export default function Calculator() {
+    const [cache,setCache] = React.useState([])
+    const [string,setString] = React.useState('')
+    const [result,setResult] = React.useState('')
+    const [display,setDisplay] = React.useState('')
+    const [error,setError] = React.useState('')
 
+    const coba = math.evaluate("oaiwjdoaw9+")
+
+    const addNumber = (number) => {
+        
+        setString(string.concat(number))
+        setDisplay(string)
+    }
+
+    const addOperator = (operator) => {
+        setString(string.concat(" ",operator," "))
+        setDisplay(string)
+    }
+
+
+    const addCache = () => {
+        let newValue = {
+            string: string,
+            result: result
+        }
+        setCache(prevArray => [...prevArray,newValue])
+    }
+
+
+    const clickResult = () => {
+        try{
+            if(string.length==0){
+                setError('wrong syntax')
+                return;
+            }
+            let result = math.evaluate(string)
+            setResult(result)
+            addCache()
+            setString(result)
+            setDisplay(result)
+            setError('')  
+        }catch(err){
+            setError("wrong syntax")
+        }
+    }
+
+    const AC = () => {
+        let last_string = string.charAt(string.length - 1)
+        if(last_string==" "){
+            let part = string.slice(0,string.length-3)
+            setString(part)
+            setDisplay(string)
+        }
+        else{
+            let part = string.slice(0,string.length-1)
+            setString(part)
+            setDisplay(string)
+        }
+
+    }
+
+    const makeNull = () => {
+        setString('')
+        setDisplay(string)
+    }
 
     return (
         <React.Fragment>
@@ -154,7 +222,10 @@ export default function Calculator() {
                         test
                     </Box>
                     <Box sx={{ width: '100%', minHeight: '50px', bgcolor: 'purple' }}>
-                        test
+                        <Typography>
+                            {string}
+                            {error}
+                        </Typography>
                     </Box>
 
 
