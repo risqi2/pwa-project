@@ -38,7 +38,6 @@ const appRoutes = [
 export default function Home() {
     return (
         <React.Fragment>
-            <Container maxWidth="sm" sx={{ bgcolor: 'yellow',height:'100vh' }}>
                 <Stack
                     direction="column"
                     justifyContent="center"
@@ -62,7 +61,6 @@ export default function Home() {
                     </List>
                 </Stack>
 
-            </Container>
         </React.Fragment>
     )
 }

@@ -1,10 +1,12 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
-
+import React from "react";
+import { Outlet } from "react-router-dom";
+import AppContainer from "../layouts/AppContainer";
 export default function Root() {
   return (
     <React.Fragment>
-        <Outlet/>
+      <AppContainer>
+        <Outlet />
+      </AppContainer>
     </React.Fragment>
-  )
+  );
 }

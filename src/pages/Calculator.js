@@ -285,19 +285,17 @@ export default function Calculator() {
         {console.log(string)}
         {console.log("display")}
         {console.log(display)}
-      <Container maxWidth="sm" sx={{ height: "100vh" ,bgcolor:'#edede9',padding:'30px'}}>
+
         <Stack
           direction="column"
           justifyContent="center"
           alignItems="center"
           spacing={2}
         >
-
-
             <List
             sx={{
                 width:'100%',
-                bgcolor: 'background.paper',
+                bgcolor: "#ffd60a",
                 position: 'relative',
                 overflow: 'auto',
                 height: 300,
@@ -354,7 +352,7 @@ export default function Calculator() {
             ))}
           </Stack>
         </Stack>
-      </Container>
+
     </React.Fragment>
   );
 }
