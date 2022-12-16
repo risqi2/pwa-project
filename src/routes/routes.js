@@ -4,9 +4,11 @@ import About from "../pages/About";
 import Calculator from "../pages/Calculator";
 import Degree from "../pages/Degree";
 import Home from "../pages/Home";
+import Length from "../pages/Length";
 import Money from "../pages/Money";
 import Root from "../pages/Root";
 import SimpleNotes from "../pages/SimpleNotes";
+import Weight from "../pages/Weight";
 
 const router = createBrowserRouter([
     {
@@ -32,6 +34,16 @@ const router = createBrowserRouter([
             {
                 path:"degree",
                 element:<Degree/>,
+                loader:null,
+            },
+            {
+                path:"weight",
+                element:<Weight/>,
+                loader:null,
+            },
+            {
+                path:"length",
+                element:<Length/>,
                 loader:null,
             },
             {

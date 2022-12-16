@@ -6,22 +6,36 @@ import DeviceThermostatIcon from '@mui/icons-material/DeviceThermostat';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import EventNoteIcon from '@mui/icons-material/EventNote';
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
+import ScaleIcon from '@mui/icons-material/Scale';
+import StraightenIcon from '@mui/icons-material/Straighten';
+
+
 
 const appRoutes = [
     {
-        name: "calculator",
+        name: "basic calculator",
         route: "/calculator",
         icon: <CalculateIcon />,
     },
     {
-        name: "degree calc",
+        name: "temperature converter",
         route: "/degree",
         icon: <DeviceThermostatIcon />,
     },
     {
-        name: "money calc",
+        name: "currency converter",
         route: "/money",
         icon: <CurrencyExchangeIcon />,
+    },
+    {
+        name: "wieght converter",
+        route: '/weight',
+        icon:<ScaleIcon/>,
+    },
+    {
+        name: "length converter",
+        route: '/length',
+        icon:<StraightenIcon/>,
     },
     {
         name: "simple notes",

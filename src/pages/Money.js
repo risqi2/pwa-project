@@ -9,6 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import DirectionsIcon from '@mui/icons-material/Directions';
+import { Stack } from '@mui/system';
 
 
 const currencies = [
@@ -36,29 +37,63 @@ const currencies = [
 
 export default function Money() {
   return (
-    <Paper
-      component="form"
-      sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
-    >
-      <InputBase
-        sx={{ ml: 1, flex: 1 }}
-        placeholder="Enter value"
-        inputProps={{ 'aria-label': 'search google maps' }}
-      />
-      <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-      <TextField
-          id="outlined-select-currency"
-          select
-          defaultValue="EUR"
-          sx={{ ml: 1, flex: 1 }}
-          variant="standard"
+    <React.Fragment>
+      <Stack
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        spacing={2}
+      >
+        <Paper
+          component="form"
+          sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
         >
-          {currencies.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
-    </Paper>
+          <InputBase
+            sx={{ ml: 1, flex: 1 }}
+            placeholder="Enter value"
+            inputProps={{ 'aria-label': 'search google maps' }}
+          />
+          <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+          <TextField
+            id="outlined-select-currency"
+            select
+            defaultValue="EUR"
+            sx={{ ml: 1, flex: 1 }}
+            variant="standard"
+          >
+            {currencies.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+        </Paper>
+        <Paper
+          component="form"
+          sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
+        >
+          <InputBase
+            sx={{ ml: 1, flex: 1 }}
+            placeholder="Enter value"
+            inputProps={{ 'aria-label': 'search google maps' }}
+          />
+          <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+          <TextField
+            id="outlined-select-currency"
+            select
+            defaultValue="EUR"
+            sx={{ ml: 1, flex: 1 }}
+            variant="standard"
+          >
+            {currencies.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+        </Paper>
+      </Stack>
+    </React.Fragment>
+
   );
 }
