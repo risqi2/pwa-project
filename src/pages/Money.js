@@ -32,10 +32,9 @@ const currencies = [
 ];
 
 
-
-
-
 export default function Money() {
+
+
   return (
     <React.Fragment>
       <Stack

@@ -279,12 +279,6 @@ export default function Calculator() {
 
   return (
     <React.Fragment>
-        {console.log("cache")}
-        {console.log(cache)}
-        {console.log("string")}
-        {console.log(string)}
-        {console.log("display")}
-        {console.log(display)}
 
         <Stack
           direction="column"

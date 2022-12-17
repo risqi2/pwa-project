@@ -3,6 +3,7 @@ import Error from "../components/Error";
 import About from "../pages/About";
 import Calculator from "../pages/Calculator";
 import Degree from "../pages/Degree";
+import Error404 from "../pages/Error404";
 import Home from "../pages/Home";
 import Length from "../pages/Length";
 import Money from "../pages/Money";
@@ -14,7 +15,7 @@ const router = createBrowserRouter([
     {
         path:"/",
         element:<Root/>,
-        errorElement:null,
+        errorElement:<Error404/>,
         children:[
             {
                 path:"",
