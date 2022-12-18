@@ -2,12 +2,87 @@ import { Box, Button, IconButton, List, ListItem, ListItemAvatar, ListItemButton
 import { Stack } from "@mui/system";
 import React from "react";
 import TextField from '@mui/material/TextField';
+import PropTypes from 'prop-types';
 
+import DialogTitle from '@mui/material/DialogTitle';
+import Dialog from '@mui/material/Dialog';
 
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CloseIcon from '@mui/icons-material/Close';
+
+
+
+
+const data = [
+    {
+        id: 1,
+        title: "testing",
+        text: "halo guys",
+    },
+    {
+        id: 2,
+        title: "what's up",
+        text: "hi",
+    },
+    {
+        id: 3,
+        title: "my account",
+        text: "id:something \n pw:asw",
+    },
+    {
+        id: 4,
+        title: "cok",
+        text: "zz",
+    },
+    {
+        id: 5,
+        title: "we",
+        text: "id:232313",
+    },
+]
+
+
+function NoteModal(props) {
+    const { open, onClose, data, editing,editNote,editNoteCancel,submitEditNote } = props;
+    return (
+        <>
+            <Stack
+                direction="column"
+                justifyContent="center"
+                alignItems="flex-end"
+                spacing={1}
+            >
+
+                <Stack
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="center"
+                    spacing={2}
+                >
+                    <IconButton><EditIcon /></IconButton>
+                    <IconButton onClick={onClose}><CloseIcon /></IconButton>
+                </Stack>
+                {
+
+                }
+                <Typography
+                    sx={{ width: '100%' }}
+                    variant="h6" component="h2">
+                    {data.title}
+                </Typography>
+                <Typography sx={{ mt: 2, width: '100%' }}>
+                    {data.text}
+                </Typography>
+            </Stack>
+
+        </>
+    )
+}
+
+
+
 
 const style = {
     position: 'absolute',
@@ -18,50 +93,9 @@ const style = {
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
-    p: 4,
+    p: 2,
+    borderRadius: '10px',
 };
-
-
-function Bo() {
-    return (
-        <React.Fragment>
-            <IconButton>
-                <CloseIcon />
-            </IconButton>
-            <TextField
-                required
-                id="outlined-required"
-                label="Required"
-                defaultValue="Hello World"
-            />
-            <TextField
-                id="outlined-multiline-static"
-                label="Multiline"
-                multiline
-                rows={4}
-                defaultValue="Default Value"
-            />
-            <Button>Save</Button>
-        </React.Fragment>
-    )
-}
-
-function Ba() {
-    return (
-        <React.Fragment>
-            <IconButton>
-                <CloseIcon />
-            </IconButton>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-                Text in a modal
-            </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </Typography>
-            <Button>Save</Button>
-        </React.Fragment>
-    )
-}
 
 export default function SimpleNotes() {
 
@@ -75,6 +109,34 @@ export default function SimpleNotes() {
     const handleOpen2 = () => setOpen2(true);
     const handleClose2 = () => setOpen2(false);
 
+    const [editing, setEditing] = React.useState(false)
+    const handleEditOpen = () => setEditing(true)
+    const handleEditClose = () => setEditing(false)
+
+    const [choosenData, setChoosenData] = React.useState({})
+
+    const editNote = (data) => {
+        console.log("editing of id = " + data.id)
+        handleEditOpen()
+        //set title and text to existing data
+        setTitle(data.title)
+        setText(data.text)
+    }
+
+    const editNoteCancel = () => {
+        handleEditClose()
+        resetNote()
+    }
+
+    const submitEditNote = (id) => {
+        return null
+    }
+
+    const deleteNote = (id) => {
+        console.log("delete is running")
+        setNotes(notes.filter(note => note.id !== id))
+    }
+
 
     const [title, setTitle] = React.useState("");
     const [text, setText] = React.useState("")
@@ -86,13 +148,38 @@ export default function SimpleNotes() {
     }
 
     const createNote = () => {
+        let id = null;
+        if (notes.length > 0) {
+            id = notes[1].id + 1;
+        }
+        else {
+            id = 0;
+        }
         let newValue = {
-            id: notes.length + 1,
+            id: id,
             title: title,
             text: text,
         };
         setNotes((prevArray) => [...prevArray, newValue]);
+
+        handleClose()
+        resetNote()
     }
+
+    const resetNote = () => {
+        setTitle("")
+        setText("")
+    }
+
+    React.useEffect(() => {
+        setNotes(data)
+    }, [])
+
+
+
+
+
+
 
 
 
@@ -100,22 +187,55 @@ export default function SimpleNotes() {
 
     return (
         <React.Fragment>
+            {console.log(notes)}
             <Modal
                 open={open}
                 onClose={handleClose}
             >
                 <Box sx={style}>
-                    <Bo />
+                    <Stack
+                        direction="column"
+                        justifyContent="center"
+                        alignItems="flex-end"
+                        spacing={1}
+                    >
+                        <IconButton onClick={handleClose}>
+                            <CloseIcon />
+                        </IconButton>
+                        <TextField
+                            sx={{ width: '100%' }}
+                            required
+                            label="Title"
+                            value={title}
+                            onChange={handleChangeTitle}
+                        />
+                        <TextField
+                            sx={{ width: '100%' }}
+                            label="Text"
+                            multiline
+                            rows={4}
+                            value={text}
+                            onChange={handleChangeText}
+                        />
+                        <Button onClick={createNote}>Save</Button>
+                    </Stack>
                 </Box>
             </Modal>
+
             <Modal
                 open={open2}
                 onClose={handleClose2}
             >
                 <Box sx={style}>
-                    <Ba />
+                    <NoteModal
+                        open={open2}
+                        onClose={handleClose2}
+                        data={choosenData}
+                    />
                 </Box>
             </Modal>
+
+
             <Stack
                 direction="column"
                 justifyContent="center"
@@ -126,23 +246,27 @@ export default function SimpleNotes() {
                     Create new note
                 </Button>
                 <List sx={{ width: '100%' }}>
+                    {
+                        notes.map((note) => (
+                            <React.Fragment>
+                                <ListItem disablePadding key={note.id} sx={{ my: '10px',bgcolor: 'white', borderRadius:'20px' }} >
+                                    <ListItemButton sx={{ borderRadius: '20px 0 0 20px' }} onClick={() => { handleOpen2(); setChoosenData(note) }}>
+                                        <ListItemText
+                                            primary={note.title}
+                                            secondary={note.text}
+                                        />
+                                        
+                                    </ListItemButton>
+                                    <IconButton onClick={() => {deleteNote(note.id)}}>
+                                            <DeleteIcon />
+                                    </IconButton>
 
-                    <ListItem disablePadding >
-                        <ListItemButton sx={{ bgcolor: 'white', borderRadius: '20px' }} onClick={handleOpen2}>
-                            <ListItemText
-                                primary={"kucing"}
-                                secondary={"halo apa kabar"}
-                            />
-                            <IconButton>
-                                <EditIcon />
-                            </IconButton>
-                            <IconButton>
-                                <DeleteIcon />
-                            </IconButton>
-                        </ListItemButton>
+                                </ListItem>
 
-                    </ListItem>
+                            </React.Fragment>
 
+                        ))
+                    }
                 </List>
             </Stack>
         </React.Fragment>
