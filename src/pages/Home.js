@@ -10,7 +10,7 @@ import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-
+import Bounce from 'react-reveal/Bounce';
 const appRoutes = [
     {
         name: "basic calculator",
@@ -50,12 +50,14 @@ export default function Home() {
                 <List sx={{ width: '100%', maxWidth: 360, }}>
                     {
                         appRoutes.map((item) => (
+                            <Bounce left>
                             <ListItemButton sx={{ borderRadius: '10px', bgcolor: 'background.paper', my: '20px', }} component={Link} to={item.route}>
                                 <ListItemIcon>
                                     {item.icon}
                                 </ListItemIcon>
                                 <ListItemText primary={item.name} />
                             </ListItemButton>
+                            </Bounce>
                         ))
                     }
                 </List>

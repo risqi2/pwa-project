@@ -256,7 +256,7 @@ export default function SimpleNotes() {
                 spacing={2}
             >
                 <Fade right>
-                <Button variant="outlined" startIcon={<PostAddIcon />} onClick={handleOpen}>
+                <Button variant="contained" sx={{bgcolor:'#758bfd'}} startIcon={<PostAddIcon />} onClick={handleOpen}>
                     Create new note
                 </Button>
                 
