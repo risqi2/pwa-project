@@ -10,6 +10,7 @@ import {
   ListItemText,
   Modal,
   Typography,
+  Divider,
 } from "@mui/material";
 import { Stack } from "@mui/system";
 import React from "react";
@@ -32,7 +33,7 @@ const data = [
   {
     id: 1,
     title: "testing",
-    text: "halo guys",
+    text: "halo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guysyshalo guyshalo guyshalo guyshalo guyshalo guysyshalo guyshalo guyshalo guyshalo guyshalo guysyshalo guyshalo guyshalo guyshalo guyshalo guysyshalo guyshalo guyshalo guyshalo guyshalo guysyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guys",
   },
   {
     id: 2,
@@ -78,7 +79,7 @@ export default function SimpleNotes() {
   };
   const handleClose = () => {
     setOpen(false);
-    resetNote()
+    resetNote();
   };
 
   const [open2, setOpen2] = React.useState(false);
@@ -87,38 +88,38 @@ export default function SimpleNotes() {
   };
   const handleClose2 = () => {
     setOpen2(false);
-    handleEditClose()
+    handleEditClose();
   };
 
-    const [editing, setEditing] = React.useState(false);
-    const handleEditOpen = () => {
-      setEditing(true);
-      setTitle(choosenData.title);
-      setText(choosenData.text);
-    };
+  const [editing, setEditing] = React.useState(false);
+  const handleEditOpen = () => {
+    setEditing(true);
+    setTitle(choosenData.title);
+    setText(choosenData.text);
+  };
 
-    const handleEditClose = () => {
-      setEditing(false);
-      resetNote();
-    };
+  const handleEditClose = () => {
+    setEditing(false);
+    resetNote();
+  };
 
-    const [choosenData, setChoosenData] = React.useState({});
-
-
+  const [choosenData, setChoosenData] = React.useState({});
 
   const submitEditNote = () => {
-    setNotes((notes) => notes.map((note) => {
-        if(note.id == choosenData.id){
-            return {
-                id: choosenData.id,
-                title:title,
-                text:text,
-            };
+    setNotes((notes) =>
+      notes.map((note) => {
+        if (note.id == choosenData.id) {
+          return {
+            id: choosenData.id,
+            title: title,
+            text: text,
+          };
         }
         return note;
-    }))
-    resetNote()
-  }
+      })
+    );
+    resetNote();
+  };
 
   const deleteNote = (id) => {
     setNotes(notes.filter((note) => note.id !== id));
@@ -150,9 +151,9 @@ export default function SimpleNotes() {
   };
 
   const resetNote = () => {
-    setTitle("")
-    setText("")
-  }
+    setTitle("");
+    setText("");
+  };
 
   React.useEffect(() => {
     setNotes(data);
@@ -225,7 +226,6 @@ export default function SimpleNotes() {
                 <IconButton onClick={handleClose2}>
                   <CloseIcon />
                 </IconButton>
-
               </Stack>
 
               {editing == true ? (
@@ -245,7 +245,12 @@ export default function SimpleNotes() {
                     value={text}
                     onChange={handleChangeText}
                   />
-                  <Button onClick={()=>{submitEditNote();handleClose2()}}>
+                  <Button
+                    onClick={() => {
+                      submitEditNote();
+                      handleClose2();
+                    }}
+                  >
                     Save
                   </Button>
                 </>
@@ -285,22 +290,33 @@ export default function SimpleNotes() {
           </Button>
         </Fade>
 
-        <List sx={{ width: "100%" }}>
-          {notes.map((note) => (
-            <ListItem
-              key={note.id}
-              disablePadding
-              sx={{ my: "10px", bgcolor: "white", borderRadius: "20px" }}
-            >
-              <ListItemButton sx={{ borderRadius: "20px 0 0 20px" }} onClick={()=> {handleOpen2();setChoosenData(note)}}>
-                <ListItemText primary={note.title} secondary={note.text} />
-              </ListItemButton>
-              <IconButton onClick={() => deleteNote(note.id)}>
-                <DeleteIcon />
-              </IconButton>
-            </ListItem>
-          ))}
-        </List>
+        <TransitionGroup appear={true} enter={true} exit={true}>
+          <List >
+            {notes.map((note) => (
+              <Fade key={note.id} collapse bottom>
+                <ListItem
+                  disablePadding
+                  sx={{ bgcolor: "white", borderRadius: "20px" ,my:'10px' }}
+                >
+                  <ListItemButton
+                    sx={{ borderRadius: "20px 0 0 20px" }}
+                    onClick={() => {
+                      handleOpen2();
+                      setChoosenData(note);
+                    }}
+                  >
+                    {/* <Typography noWrap>{note.text}</Typography> */}
+                    <ListItemText primary={note.title} secondary={note.text} sx={{textOverflow:"ellipsis",overflow:"hidden",whiteSpace:"nowrap",width:'300px'}}/>
+                  </ListItemButton>
+                  <IconButton onClick={() => deleteNote(note.id)}>
+                    <DeleteIcon />
+                  </IconButton>
+                </ListItem>
+              </Fade>
+              
+            ))}
+          </List>
+        </TransitionGroup>
       </Stack>
     </React.Fragment>
   );
