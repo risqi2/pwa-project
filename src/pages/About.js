@@ -16,24 +16,24 @@ const data = [
     picture: "cat6.jpeg",
   },
   {
-    name: "Risqi Ikhsani",
-    nim: "195410259",
-    picture: "cat4.jpeg",
-  },
-  {
-    name: "Risqi Ikhsani",
-    nim: "195410259",
-    picture: "cat3.jpeg",
-  },
-  {
-    name: "Risqi Ikhsani",
-    nim: "195410259",
+    name: "Mawardi Janitra Hadi",
+    nim: "215410095",
     picture: "cat2.jpeg",
   },
   {
-    name: "Risqi Ikhsani",
-    nim: "195410259",
+    name: "Akira Wahyu Saputra",
+    nim: "215410111",
+    picture: "cat4.jpeg",
+  },
+  {
+    name: "Steven Natanael Oey",
+    nim: "215410127",
     picture: "cat1.jpeg",
+  },
+  {
+    name: "Zaki Nedhiansyah",
+    nim: "215410141",
+    picture: "cat3.jpeg",
   },
 ];
 
