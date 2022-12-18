@@ -43,47 +43,6 @@ const data = [
     },
 ]
 
-
-function NoteModal(props) {
-    const { open, onClose, data, editing,editNote,editNoteCancel,submitEditNote } = props;
-    return (
-        <>
-            <Stack
-                direction="column"
-                justifyContent="center"
-                alignItems="flex-end"
-                spacing={1}
-            >
-
-                <Stack
-                    direction="row"
-                    justifyContent="center"
-                    alignItems="center"
-                    spacing={2}
-                >
-                    <IconButton><EditIcon /></IconButton>
-                    <IconButton onClick={onClose}><CloseIcon /></IconButton>
-                </Stack>
-                {
-
-                }
-                <Typography
-                    sx={{ width: '100%' }}
-                    variant="h6" component="h2">
-                    {data.title}
-                </Typography>
-                <Typography sx={{ mt: 2, width: '100%' }}>
-                    {data.text}
-                </Typography>
-            </Stack>
-
-        </>
-    )
-}
-
-
-
-
 const style = {
     position: 'absolute',
     top: '50%',
@@ -102,34 +61,46 @@ export default function SimpleNotes() {
     const [notes, setNotes] = React.useState([])
 
     const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
+    const handleOpen = () => {
+        setOpen(true)
+        handleEditClose()
+    };
     const handleClose = () => setOpen(false);
 
     const [open2, setOpen2] = React.useState(false);
     const handleOpen2 = () => setOpen2(true);
-    const handleClose2 = () => setOpen2(false);
+    const handleClose2 = () => {
+        setOpen2(false)
+        handleEditClose()
+    };
 
     const [editing, setEditing] = React.useState(false)
-    const handleEditOpen = () => setEditing(true)
-    const handleEditClose = () => setEditing(false)
+    const handleEditOpen = () => {
+        setEditing(true)
+        //set title and text to existing data
+        setTitle(choosenData.title)
+        setText(choosenData.text)
+    }
+
+    const handleEditClose = () => {
+        setEditing(false)
+        resetNote()
+    }
+    
 
     const [choosenData, setChoosenData] = React.useState({})
 
-    const editNote = (data) => {
-        console.log("editing of id = " + data.id)
-        handleEditOpen()
-        //set title and text to existing data
-        setTitle(data.title)
-        setText(data.text)
-    }
-
-    const editNoteCancel = () => {
-        handleEditClose()
-        resetNote()
-    }
-
     const submitEditNote = (id) => {
-        return null
+        setNotes(notes => notes.map(note => {
+            if(note.id===id){
+                return {
+                        ...note,
+                        title:title,
+                        text:text,
+                }
+            }
+            return note;
+        }))
     }
 
     const deleteNote = (id) => {
@@ -187,7 +158,7 @@ export default function SimpleNotes() {
 
     return (
         <React.Fragment>
-            {console.log(notes)}
+            {console.log(editing)}
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -227,11 +198,61 @@ export default function SimpleNotes() {
                 onClose={handleClose2}
             >
                 <Box sx={style}>
-                    <NoteModal
-                        open={open2}
-                        onClose={handleClose2}
-                        data={choosenData}
-                    />
+                    <>
+                        <Stack
+                            direction="column"
+                            justifyContent="center"
+                            alignItems="flex-end"
+                            spacing={1}
+                        >
+
+                            <Stack
+                                direction="row"
+                                justifyContent="center"
+                                alignItems="center"
+                                spacing={2}
+                            >
+                                {
+                                    editing == true ? (<Button onClick={handleEditClose}>Cancel edit</Button>) : (<IconButton onClick={handleEditOpen}><EditIcon /></IconButton>)
+                                }
+                                <IconButton onClick={handleClose2}><CloseIcon /></IconButton>
+                            </Stack>
+                            {
+                                editing == true ? (
+                                    <>
+                                        <TextField
+                                            sx={{ width: '100%' }}
+                                            required
+                                            label="Title"
+                                            value={title}
+                                            onChange={handleChangeTitle}
+                                        />
+                                        <TextField
+                                            sx={{ width: '100%' }}
+                                            label="Text"
+                                            multiline
+                                            rows={4}
+                                            value={text}
+                                            onChange={handleChangeText}
+                                        />
+                                        <Button onClick={() => {handleClose2();submitEditNote(choosenData.id)}}>Save</Button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Typography
+                                            sx={{ width: '100%' }}
+                                            variant="h6" component="h2">
+                                            {choosenData.title}
+                                        </Typography>
+                                        <Typography sx={{ mt: 2, width: '100%' }}>
+                                            {choosenData.text}
+                                        </Typography>
+                                    </>
+                                )
+                            }
+
+                        </Stack>
+                    </>
                 </Box>
             </Modal>
 
@@ -249,16 +270,16 @@ export default function SimpleNotes() {
                     {
                         notes.map((note) => (
                             <React.Fragment>
-                                <ListItem disablePadding key={note.id} sx={{ my: '10px',bgcolor: 'white', borderRadius:'20px' }} >
+                                <ListItem disablePadding key={note.id} sx={{ my: '10px', bgcolor: 'white', borderRadius: '20px' }} >
                                     <ListItemButton sx={{ borderRadius: '20px 0 0 20px' }} onClick={() => { handleOpen2(); setChoosenData(note) }}>
                                         <ListItemText
                                             primary={note.title}
                                             secondary={note.text}
                                         />
-                                        
+
                                     </ListItemButton>
-                                    <IconButton onClick={() => {deleteNote(note.id)}}>
-                                            <DeleteIcon />
+                                    <IconButton onClick={() => { deleteNote(note.id) }}>
+                                        <DeleteIcon />
                                     </IconButton>
 
                                 </ListItem>
