@@ -28,9 +28,7 @@ export default function AppContainer(props) {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
-            onClick={() => {
-              navigate(-1)
-            }}
+            onClick={() => navigate("/")}
           >
             <ArrowBackIcon />
           </IconButton>

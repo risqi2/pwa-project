@@ -1,290 +1,307 @@
-import { Box, Button, Paper, IconButton, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Modal, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Paper,
+  IconButton,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemButton,
+  ListItemText,
+  Modal,
+  Typography,
+} from "@mui/material";
 import { Stack } from "@mui/system";
 import React from "react";
-import TextField from '@mui/material/TextField';
-import PropTypes from 'prop-types';
+import TextField from "@mui/material/TextField";
+import PropTypes from "prop-types";
 
-import DialogTitle from '@mui/material/DialogTitle';
-import Dialog from '@mui/material/Dialog';
+import DialogTitle from "@mui/material/DialogTitle";
+import Dialog from "@mui/material/Dialog";
 
-import PostAddIcon from '@mui/icons-material/PostAdd';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import CloseIcon from '@mui/icons-material/Close';
+import PostAddIcon from "@mui/icons-material/PostAdd";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import CloseIcon from "@mui/icons-material/Close";
 
-import TransitionGroup from 'react-transition-group/TransitionGroup';
-import Zoom from 'react-reveal/Zoom';
+import TransitionGroup from "react-transition-group/TransitionGroup";
+import Zoom from "react-reveal/Zoom";
 import { Fade } from "react-reveal";
 
 const data = [
-    {
-        id: 1,
-        title: "testing",
-        text: "halo guys",
-    },
-    {
-        id: 2,
-        title: "what's up",
-        text: "hi",
-    },
-    {
-        id: 3,
-        title: "my account",
-        text: "id:something \n pw:asw",
-    },
-    {
-        id: 4,
-        title: "cok",
-        text: "zz",
-    },
-    {
-        id: 5,
-        title: "we",
-        text: "id:232313",
-    },
-]
+  {
+    id: 1,
+    title: "testing",
+    text: "halo guys",
+  },
+  {
+    id: 2,
+    title: "what's up",
+    text: "hi",
+  },
+  {
+    id: 3,
+    title: "my account",
+    text: "id:something \n pw:asw",
+  },
+  {
+    id: 4,
+    title: "cok",
+    text: "zz",
+  },
+  {
+    id: 5,
+    title: "we",
+    text: "id:232313",
+  },
+];
 
 const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 2,
-    borderRadius: '10px',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 2,
+  borderRadius: "10px",
 };
 
 export default function SimpleNotes() {
+  const [notes, setNotes] = React.useState([]);
 
-    const [notes, setNotes] = React.useState([])
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+    resetNote()
+  };
 
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => {
-        setOpen(true)
-        handleEditClose()
-    };
-    const handleClose = () => setOpen(false);
+  const [open2, setOpen2] = React.useState(false);
+  const handleOpen2 = () => {
+    setOpen2(true);
+  };
+  const handleClose2 = () => {
+    setOpen2(false);
+    handleEditClose()
+  };
 
-    const [open2, setOpen2] = React.useState(false);
-    const handleOpen2 = () => setOpen2(true);
-    const handleClose2 = () => {
-        setOpen2(false)
-        handleEditClose()
-    };
-
-    const [editing, setEditing] = React.useState(false)
+    const [editing, setEditing] = React.useState(false);
     const handleEditOpen = () => {
-        setEditing(true)
-        //set title and text to existing data
-        setTitle(choosenData.title)
-        setText(choosenData.text)
-    }
+      setEditing(true);
+      setTitle(choosenData.title);
+      setText(choosenData.text);
+    };
 
     const handleEditClose = () => {
-        setEditing(false)
-        resetNote()
-    }
-
-
-    const [choosenData, setChoosenData] = React.useState({})
-
-    const submitEditNote = (id) => {
-        setNotes(notes => notes.map(note => {
-            if (note.id == id) {
-                return {
-                    id:id,
-                    title: title,
-                    text: text,
-                }
-            }
-            return note;
-        }))
-    }
-
-    const deleteNote = (id) => {
-        console.log("delete is running")
-        setNotes(notes.filter(note => note.id !== id))
-    }
-
-
-    const [title, setTitle] = React.useState("");
-    const [text, setText] = React.useState("")
-    const handleChangeTitle = (event) => {
-        setTitle(event.target.value);
+      setEditing(false);
+      resetNote();
     };
-    const handleChangeText = (event) => {
-        setText(event.target.value);
-    }
 
-    const createNote = () => {
-        console.log("create note is running")
-        let id = null;
-        if (notes.length > 0) {
-            id = notes[1].id + 1;
+    const [choosenData, setChoosenData] = React.useState({});
+
+
+
+  const submitEditNote = () => {
+    setNotes((notes) => notes.map((note) => {
+        if(note.id == choosenData.id){
+            return {
+                id: choosenData.id,
+                title:title,
+                text:text,
+            };
         }
-        else {
-            id = 0;
-        }
-        let newValue = {
-            id: id,
-            title: title,
-            text: text,
-        };
-        setNotes((prevArray) => [...prevArray, newValue]);
+        return note;
+    }))
+    resetNote()
+  }
 
-        handleClose()
-        resetNote()
+  const deleteNote = (id) => {
+    setNotes(notes.filter((note) => note.id !== id));
+  };
+
+  const [title, setTitle] = React.useState("");
+  const [text, setText] = React.useState("");
+
+  const handleChangeTitle = (event) => {
+    setTitle(event.target.value);
+  };
+  const handleChangeText = (event) => {
+    setText(event.target.value);
+  };
+
+  const createNote = () => {
+    let id = null;
+    if (notes.length > 0) {
+      id = notes[notes.length - 1].id + 1;
+    } else {
+      id = 0;
     }
+    let newValue = {
+      id: id,
+      title: title,
+      text: text,
+    };
+    setNotes((prevArray) => [...prevArray, newValue]);
+  };
 
-    const resetNote = () => {
-        setTitle("")
-        setText("")
-    }
+  const resetNote = () => {
+    setTitle("")
+    setText("")
+  }
 
-    React.useEffect(() => {
-        setNotes(data)
-    }, [])
+  React.useEffect(() => {
+    setNotes(data);
+  }, []);
 
-    return (
-        <React.Fragment>
-            {console.log(notes)}
-            <Modal
-                open={open}
-                onClose={handleClose}
+  return (
+    <React.Fragment>
+      {console.log(notes)}
+      <Modal open={open} onClose={handleClose}>
+        <Box sx={style}>
+          <Stack
+            direction="column"
+            justifyContent="center"
+            alignItems="flex-end"
+            spacing={1}
+          >
+            <IconButton onClick={handleClose}>
+              <CloseIcon />
+            </IconButton>
+            <TextField
+              sx={{ width: "100%" }}
+              required
+              label="Title"
+              value={title}
+              onChange={handleChangeTitle}
+            />
+            <TextField
+              sx={{ width: "100%" }}
+              label="Text"
+              multiline
+              rows={4}
+              value={text}
+              onChange={handleChangeText}
+            />
+            <Button
+              onClick={() => {
+                createNote();
+                handleClose();
+              }}
             >
-                <Box sx={style}>
-                    <Stack
-                        direction="column"
-                        justifyContent="center"
-                        alignItems="flex-end"
-                        spacing={1}
-                    >
-                        <IconButton onClick={handleClose}>
-                            <CloseIcon />
-                        </IconButton>
-                        <TextField
-                            sx={{ width: '100%' }}
-                            required
-                            label="Title"
-                            value={title}
-                            onChange={handleChangeTitle}
-                        />
-                        <TextField
-                            sx={{ width: '100%' }}
-                            label="Text"
-                            multiline
-                            rows={4}
-                            value={text}
-                            onChange={handleChangeText}
-                        />
-                        <Button onClick={createNote}>Save</Button>
-                    </Stack>
-                </Box>
-            </Modal>
+              Save
+            </Button>
+          </Stack>
+        </Box>
+      </Modal>
 
-            <Modal
-                open={open2}
-                onClose={handleClose2}
-            >
-                <Box sx={style}>
-                    <>
-                        <Stack
-                            direction="column"
-                            justifyContent="center"
-                            alignItems="flex-end"
-                            spacing={1}
-                        >
-
-                            <Stack
-                                direction="row"
-                                justifyContent="center"
-                                alignItems="center"
-                                spacing={2}
-                            >
-                                {
-                                    editing == true ? (<Button onClick={handleEditClose}>Cancel edit</Button>) : (<IconButton onClick={handleEditOpen}><EditIcon /></IconButton>)
-                                }
-                                <IconButton onClick={handleClose2}><CloseIcon /></IconButton>
-                            </Stack>
-                            {
-                                editing == true ? (
-                                    <>
-                                        <TextField
-                                            sx={{ width: '100%' }}
-                                            required
-                                            label="Title"
-                                            value={title}
-                                            onChange={handleChangeTitle}
-                                        />
-                                        <TextField
-                                            sx={{ width: '100%' }}
-                                            label="Text"
-                                            multiline
-                                            rows={4}
-                                            value={text}
-                                            onChange={handleChangeText}
-                                        />
-                                        <Button onClick={() => { handleClose2(); submitEditNote(choosenData.id) }}>Save</Button>
-                                    </>
-                                ) : (
-                                    <>
-                                        <Typography
-                                            sx={{ width: '100%' }}
-                                            variant="h6" component="h2">
-                                            {choosenData.title}
-                                        </Typography>
-                                        <Typography sx={{ mt: 2, width: '100%' }}>
-                                            {choosenData.text}
-                                        </Typography>
-                                    </>
-                                )
-                            }
-
-                        </Stack>
-                    </>
-                </Box>
-            </Modal>
-
-
+      <Modal open={open2} onClose={handleClose2}>
+        <Box sx={style}>
+          <>
             <Stack
-                direction="column"
+              direction="column"
+              justifyContent="center"
+              alignItems="flex-end"
+              spacing={1}
+            >
+              <Stack
+                direction="row"
                 justifyContent="center"
                 alignItems="center"
                 spacing={2}
-            >
-                <Fade right>
-                <Button variant="contained" sx={{bgcolor:'#758bfd'}} startIcon={<PostAddIcon />} onClick={handleOpen}>
-                    Create new note
-                </Button>
-                
-                </Fade>
+              >
+                {editing == true ? (
+                  <Button onClick={handleEditClose}>Cancel edit</Button>
+                ) : (
+                  <IconButton onClick={handleEditOpen}>
+                    <EditIcon />
+                  </IconButton>
+                )}
 
-                    <List sx={{ width: '100%' }}>
-                        {
-                            notes.map((note) => (
-                                
-                                <ListItem key={note.id} disablePadding sx={{ my: '10px', bgcolor: 'white', borderRadius: '20px' }} >
-                                    <ListItemButton sx={{ borderRadius: '20px 0 0 20px' }} onClick={() => { handleOpen2(); setChoosenData(note) }}>
-                                        <ListItemText
-                                            primary={note.title}
-                                            secondary={note.text}
-                                        />
+                <IconButton onClick={handleClose2}>
+                  <CloseIcon />
+                </IconButton>
 
-                                    </ListItemButton>
-                                    <IconButton onClick={() => { deleteNote(note.id) }}>
-                                        <DeleteIcon />
-                                    </IconButton>
+              </Stack>
 
-                                </ListItem>
-                                
-
-                            ))
-                        }
-                    </List>
+              {editing == true ? (
+                <>
+                  <TextField
+                    sx={{ width: "100%" }}
+                    required
+                    label="Title"
+                    value={title}
+                    onChange={handleChangeTitle}
+                  />
+                  <TextField
+                    sx={{ width: "100%" }}
+                    label="Text"
+                    multiline
+                    rows={4}
+                    value={text}
+                    onChange={handleChangeText}
+                  />
+                  <Button onClick={()=>{submitEditNote();handleClose2()}}>
+                    Save
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Typography
+                    sx={{ width: "100%" }}
+                    variant="h6"
+                    component="h2"
+                  >
+                    {choosenData.title}
+                  </Typography>
+                  <Typography sx={{ mt: 2, width: "100%" }}>
+                    {choosenData.text}
+                  </Typography>
+                </>
+              )}
             </Stack>
-        </React.Fragment>
-    )
+          </>
+        </Box>
+      </Modal>
+
+      <Stack
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        spacing={2}
+      >
+        <Fade right>
+          <Button
+            variant="contained"
+            sx={{ bgcolor: "#758bfd" }}
+            startIcon={<PostAddIcon />}
+            onClick={handleOpen}
+          >
+            Create new note
+          </Button>
+        </Fade>
+
+        <List sx={{ width: "100%" }}>
+          {notes.map((note) => (
+            <ListItem
+              key={note.id}
+              disablePadding
+              sx={{ my: "10px", bgcolor: "white", borderRadius: "20px" }}
+            >
+              <ListItemButton sx={{ borderRadius: "20px 0 0 20px" }} onClick={()=> {handleOpen2();setChoosenData(note)}}>
+                <ListItemText primary={note.title} secondary={note.text} />
+              </ListItemButton>
+              <IconButton onClick={() => deleteNote(note.id)}>
+                <DeleteIcon />
+              </IconButton>
+            </ListItem>
+          ))}
+        </List>
+      </Stack>
+    </React.Fragment>
+  );
 }
