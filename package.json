@@ -2,7 +2,7 @@
   "name": "cra-pwa",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://risqi2.github.io/pwa-project/",
+  "homepage": "http://risqi2.github.io/pwa-project",
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
