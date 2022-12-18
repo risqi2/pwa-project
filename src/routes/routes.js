@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import { createHashRouter } from "react-router-dom";
 import Error from "../components/Error";
 import About from "../pages/About";
 import Calculator from "../pages/Calculator";
@@ -10,7 +11,7 @@ import Root from "../pages/Root";
 import SimpleNotes from "../pages/SimpleNotes";
 
 
-const router = createBrowserRouter([
+const router = createHashRouter([
     {
         path:"/",
         element:<Root/>,
