@@ -9,38 +9,33 @@ import Typography from "@mui/material/Typography";
 import { Stack } from "@mui/material";
 import { Roll } from "react-reveal";
 
-import cat1 from "../images/cat1.jpeg"
-import cat2 from "../images/cat2.jpeg"
-import cat3 from "../images/cat3.jpeg"
-import cat4 from "../images/cat4.jpeg"
-import cat5 from "../images/cat5.jpeg"
-import cat6 from "../images/cat6.jpeg"
+
 
 const data = [
   {
     name: "Risqi Ikhsani",
     nim: "195410259",
-    picture: cat6,
+    picture: "/cat6.png",
   },
   {
     name: "Mawardi Janitra Hadi",
     nim: "215410095",
-    picture: cat2,
+    picture: "/cat2.png",
   },
   {
     name: "Akira Wahyu Saputra",
     nim: "215410111",
-    picture: cat3,
+    picture: "/cat3.png",
   },
   {
     name: "Steven Natanael Oey",
     nim: "215410127",
-    picture: cat4,
+    picture: "/cat4.png",
   },
   {
     name: "Zaki Nedhiansyah",
     nim: "215410141",
-    picture: cat5,
+    picture: "/cat5.png",
   },
 ];
 
@@ -65,7 +60,7 @@ export default function About() {
             <>
               <ListItem alignItems="flex-start" key={a.name}>
                 <ListItemAvatar>
-                  <Avatar alt={a.name} src={a.picture} sx={{ width: 80, height: 80 }}/>
+                  <Avatar alt={a.name} src={process.env.PUBLIC_URL + a.picture} sx={{ width: 80, height: 80 }}/>
                 </ListItemAvatar>
                 <ListItemText
                     sx={{ml:'20px',mt:'20px'}}
