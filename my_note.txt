@@ -1,0 +1,2 @@
+error when using react-router in github pages
+solution = change to createHashRouter instead of createBrowserRouter
