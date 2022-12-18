@@ -29,33 +29,33 @@ import TransitionGroup from "react-transition-group/TransitionGroup";
 import Zoom from "react-reveal/Zoom";
 import { Fade } from "react-reveal";
 
-const data = [
-  {
-    id: 1,
-    title: "testing",
-    text: "halo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guysyshalo guyshalo guyshalo guyshalo guyshalo guysyshalo guyshalo guyshalo guyshalo guyshalo guysyshalo guyshalo guyshalo guyshalo guyshalo guysyshalo guyshalo guyshalo guyshalo guyshalo guysyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guys",
-  },
-  {
-    id: 2,
-    title: "what's up",
-    text: "hi",
-  },
-  {
-    id: 3,
-    title: "my account",
-    text: "id:something \n pw:asw",
-  },
-  {
-    id: 4,
-    title: "cok",
-    text: "zz",
-  },
-  {
-    id: 5,
-    title: "we",
-    text: "id:232313",
-  },
-];
+// const data = [
+//   {
+//     id: 1,
+//     title: "testing",
+//     text: "halo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guysyshalo guyshalo guyshalo guyshalo guyshalo guysyshalo guyshalo guyshalo guyshalo guyshalo guysyshalo guyshalo guyshalo guyshalo guyshalo guysyshalo guyshalo guyshalo guyshalo guyshalo guysyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guyshalo guys",
+//   },
+//   {
+//     id: 2,
+//     title: "what's up",
+//     text: "hi",
+//   },
+//   {
+//     id: 3,
+//     title: "my account",
+//     text: "id:something \n pw:asw",
+//   },
+//   {
+//     id: 4,
+//     title: "cok",
+//     text: "zz",
+//   },
+//   {
+//     id: 5,
+//     title: "we",
+//     text: "id:232313",
+//   },
+// ];
 
 const style = {
   position: "absolute",
@@ -71,6 +71,7 @@ const style = {
 };
 
 export default function SimpleNotes() {
+    const [appStart,setAppStart] = React.useState(false)    // for localStorage useEffect so it won't start setData() in first render
   const [notes, setNotes] = React.useState([]);
 
   const [open, setOpen] = React.useState(false);
@@ -119,10 +120,12 @@ export default function SimpleNotes() {
       })
     );
     resetNote();
+    setAppStart(true)
   };
 
   const deleteNote = (id) => {
     setNotes(notes.filter((note) => note.id !== id));
+    setAppStart(true)
   };
 
   const [title, setTitle] = React.useState("");
@@ -148,6 +151,7 @@ export default function SimpleNotes() {
       text: text,
     };
     setNotes((prevArray) => [...prevArray, newValue]);
+    setAppStart(true)
   };
 
   const resetNote = () => {
@@ -156,8 +160,34 @@ export default function SimpleNotes() {
   };
 
   React.useEffect(() => {
-    setNotes(data);
+    let data = getData()
+    setNotes(data)
   }, []);
+
+  React.useEffect(() => {
+    if(appStart==true){
+        setData()
+    }
+  },[notes])
+
+  const getData = () => {
+    console.log("get data running")
+    let data = JSON.parse(localStorage.getItem("notes"))
+    console.log(data)
+    if(data){
+        return data;
+    }
+    else{
+        data = []
+        return data
+    }
+  }
+
+  const setData = () => {
+    console.log("set data running")
+    console.log(notes)
+    localStorage.setItem("notes", JSON.stringify(notes));
+  }
 
   return (
     <React.Fragment>
