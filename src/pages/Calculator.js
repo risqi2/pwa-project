@@ -12,7 +12,10 @@ import {
 import React from "react";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 
+import Pulse from 'react-reveal/Pulse';
+
 import { create, all } from "mathjs";
+import { Fade, Roll } from "react-reveal";
 const config = {};
 const math = create(all, config);
 
@@ -198,20 +201,19 @@ export default function Calculator() {
   const [cache, setCache] = React.useState([]);
   const [string, setString] = React.useState("");
 //   const [result, setResult] = React.useState("");
-  const [display, setDisplay] = React.useState("");
   const [error, setError] = React.useState("");
 
   // const coba = math.evaluate("oaiwjdoaw9+")
 
   const addNumber = (number) => {
     setString(string.concat(number));
-    setDisplay(string);
+    
     setError('')
   };
 
   const addOperator = (operator) => {
     setString(string.concat(" ", operator, " "));
-    setDisplay(string);
+    
     setError('')
   };
 
@@ -229,7 +231,7 @@ export default function Calculator() {
     //   setResult(result);
       addCache(result);
       setString(result.toString());
-      setDisplay(string);
+
       setError("");
     } catch (err) {
       setError("wrong syntax");
@@ -241,18 +243,18 @@ export default function Calculator() {
     if (last_string == " ") {
       let part = string.slice(0, string.length - 3);
       setString(part);
-      setDisplay(string);
+
     } else {
       let part = string.slice(0, string.length - 1);
       setString(part);
-      setDisplay(string);
+
     }
     setError('')
   };
 
   const makeNull = () => {
     setString("");
-    setDisplay(string);
+
     setError('')
   };
 
@@ -277,6 +279,15 @@ export default function Calculator() {
     }
   }
 
+  // https://stackoverflow.com/a/52266212
+  const cachesEndRef = React.useRef(null)
+  const scrollToBottom = () => {
+    cachesEndRef.current?.scrollIntoView({behavior:"smooth"})
+  }
+  React.useEffect(() => {
+    scrollToBottom()
+  },[cache])
+
   return (
     <React.Fragment>
 
@@ -286,28 +297,33 @@ export default function Calculator() {
           alignItems="center"
           spacing={2}
         >
-            <List
+
+          <List
             sx={{
-                width:'100%',
+                width:'90%',
                 bgcolor: "#ffd60a",
                 position: 'relative',
                 overflow: 'auto',
-                height: 300,
+                height: 200,
                 borderRadius:'20px',
                 p:'10px',
             }}>
               {cache.map((a) => (
                 <React.Fragment>
                     <Divider/>
+                  <Fade left>
                   <ListItem>
                     <ListItemText primary={`${a.string} = ${a.result}`} />
                   </ListItem>
+                  </Fade>
+
                   
                 </React.Fragment>
               ))}
+              <div ref={cachesEndRef}/>
             </List>
 
-          <Box sx={{ width:'100%',minHeight: "50px", bgcolor: "#ffd60a", borderRadius:'20px',p:'10px'}}>
+          <Box sx={{ width:'80%',p:'20px',minHeight: "50px", bgcolor: "#ffd60a", borderRadius:'20px'}}>
             <Typography>
                 {string}
             </Typography>
@@ -315,6 +331,7 @@ export default function Calculator() {
                 {error}
             </Typography>
           </Box>
+          
 
           <Stack
             direction="row"

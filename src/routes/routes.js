@@ -2,14 +2,13 @@ import { createBrowserRouter } from "react-router-dom";
 import Error from "../components/Error";
 import About from "../pages/About";
 import Calculator from "../pages/Calculator";
-import Degree from "../pages/Degree";
+import Converter from "../pages/Converter";
 import Error404 from "../pages/Error404";
 import Home from "../pages/Home";
-import Length from "../pages/Length";
-import Money from "../pages/Money";
+
 import Root from "../pages/Root";
 import SimpleNotes from "../pages/SimpleNotes";
-import Weight from "../pages/Weight";
+
 
 const router = createBrowserRouter([
     {
@@ -28,23 +27,8 @@ const router = createBrowserRouter([
                 loader:null,
             },
             {
-                path:"money",
-                element:<Money/>,
-                loader:null,
-            },
-            {
-                path:"degree",
-                element:<Degree/>,
-                loader:null,
-            },
-            {
-                path:"weight",
-                element:<Weight/>,
-                loader:null,
-            },
-            {
-                path:"length",
-                element:<Length/>,
+                path:"converter",
+                element:<Converter/>,
                 loader:null,
             },
             {

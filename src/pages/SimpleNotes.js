@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Modal, Typography } from "@mui/material";
+import { Box, Button, Paper, IconButton, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Modal, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import React from "react";
 import TextField from '@mui/material/TextField';
@@ -12,8 +12,9 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CloseIcon from '@mui/icons-material/Close';
 
-
-
+import TransitionGroup from 'react-transition-group/TransitionGroup';
+import Zoom from 'react-reveal/Zoom';
+import { Fade } from "react-reveal";
 
 const data = [
     {
@@ -86,17 +87,17 @@ export default function SimpleNotes() {
         setEditing(false)
         resetNote()
     }
-    
+
 
     const [choosenData, setChoosenData] = React.useState({})
 
     const submitEditNote = (id) => {
         setNotes(notes => notes.map(note => {
-            if(note.id===id){
+            if (note.id == id) {
                 return {
-                        ...note,
-                        title:title,
-                        text:text,
+                    id:id,
+                    title: title,
+                    text: text,
                 }
             }
             return note;
@@ -119,6 +120,7 @@ export default function SimpleNotes() {
     }
 
     const createNote = () => {
+        console.log("create note is running")
         let id = null;
         if (notes.length > 0) {
             id = notes[1].id + 1;
@@ -146,19 +148,9 @@ export default function SimpleNotes() {
         setNotes(data)
     }, [])
 
-
-
-
-
-
-
-
-
-
-
     return (
         <React.Fragment>
-            {console.log(editing)}
+            {console.log(notes)}
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -235,7 +227,7 @@ export default function SimpleNotes() {
                                             value={text}
                                             onChange={handleChangeText}
                                         />
-                                        <Button onClick={() => {handleClose2();submitEditNote(choosenData.id)}}>Save</Button>
+                                        <Button onClick={() => { handleClose2(); submitEditNote(choosenData.id) }}>Save</Button>
                                     </>
                                 ) : (
                                     <>
@@ -263,14 +255,18 @@ export default function SimpleNotes() {
                 alignItems="center"
                 spacing={2}
             >
+                <Fade right>
                 <Button variant="outlined" startIcon={<PostAddIcon />} onClick={handleOpen}>
                     Create new note
                 </Button>
-                <List sx={{ width: '100%' }}>
-                    {
-                        notes.map((note) => (
-                            <React.Fragment>
-                                <ListItem disablePadding key={note.id} sx={{ my: '10px', bgcolor: 'white', borderRadius: '20px' }} >
+                
+                </Fade>
+
+                    <List sx={{ width: '100%' }}>
+                        {
+                            notes.map((note) => (
+                                
+                                <ListItem key={note.id} disablePadding sx={{ my: '10px', bgcolor: 'white', borderRadius: '20px' }} >
                                     <ListItemButton sx={{ borderRadius: '20px 0 0 20px' }} onClick={() => { handleOpen2(); setChoosenData(note) }}>
                                         <ListItemText
                                             primary={note.title}
@@ -283,12 +279,11 @@ export default function SimpleNotes() {
                                     </IconButton>
 
                                 </ListItem>
+                                
 
-                            </React.Fragment>
-
-                        ))
-                    }
-                </List>
+                            ))
+                        }
+                    </List>
             </Stack>
         </React.Fragment>
     )
