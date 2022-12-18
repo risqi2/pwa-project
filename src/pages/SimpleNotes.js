@@ -71,7 +71,7 @@ const style = {
 };
 
 export default function SimpleNotes() {
-    const [appStart,setAppStart] = React.useState(false)    // for localStorage useEffect so it won't start setData() in first render
+  const [appStart, setAppStart] = React.useState(false); // for localStorage useEffect so it won't start setData() in first render
   const [notes, setNotes] = React.useState([]);
 
   const [open, setOpen] = React.useState(false);
@@ -120,12 +120,12 @@ export default function SimpleNotes() {
       })
     );
     resetNote();
-    setAppStart(true)
+    setAppStart(true);
   };
 
   const deleteNote = (id) => {
     setNotes(notes.filter((note) => note.id !== id));
-    setAppStart(true)
+    setAppStart(true);
   };
 
   const [title, setTitle] = React.useState("");
@@ -151,7 +151,7 @@ export default function SimpleNotes() {
       text: text,
     };
     setNotes((prevArray) => [...prevArray, newValue]);
-    setAppStart(true)
+    setAppStart(true);
   };
 
   const resetNote = () => {
@@ -160,34 +160,33 @@ export default function SimpleNotes() {
   };
 
   React.useEffect(() => {
-    let data = getData()
-    setNotes(data)
+    let data = getData();
+    setNotes(data);
   }, []);
 
   React.useEffect(() => {
-    if(appStart==true){
-        setData()
+    if (appStart == true) {
+      setData();
     }
-  },[notes])
+  }, [notes]);
 
   const getData = () => {
-    console.log("get data running")
-    let data = JSON.parse(localStorage.getItem("notes"))
-    console.log(data)
-    if(data){
-        return data;
+    console.log("get data running");
+    let data = JSON.parse(localStorage.getItem("notes"));
+    console.log(data);
+    if (data) {
+      return data;
+    } else {
+      data = [];
+      return data;
     }
-    else{
-        data = []
-        return data
-    }
-  }
+  };
 
   const setData = () => {
-    console.log("set data running")
-    console.log(notes)
+    console.log("set data running");
+    console.log(notes);
     localStorage.setItem("notes", JSON.stringify(notes));
-  }
+  };
 
   return (
     <React.Fragment>
@@ -321,12 +320,12 @@ export default function SimpleNotes() {
         </Fade>
 
         <TransitionGroup appear={true} enter={true} exit={true}>
-          <List >
+          <List>
             {notes.map((note) => (
               <Fade key={note.id} collapse bottom>
                 <ListItem
                   disablePadding
-                  sx={{ bgcolor: "white", borderRadius: "20px" ,my:'10px' }}
+                  sx={{ bgcolor: "white", borderRadius: "20px", my: "10px" }}
                 >
                   <ListItemButton
                     sx={{ borderRadius: "20px 0 0 20px" }}
@@ -336,14 +335,22 @@ export default function SimpleNotes() {
                     }}
                   >
                     {/* <Typography noWrap>{note.text}</Typography> */}
-                    <ListItemText primary={note.title} secondary={note.text} sx={{textOverflow:"ellipsis",overflow:"hidden",whiteSpace:"nowrap",width:'300px'}}/>
+                    <ListItemText
+                      primary={note.title}
+                      secondary={note.text}
+                      sx={{
+                        textOverflow: "ellipsis",
+                        overflow: "hidden",
+                        whiteSpace: "nowrap",
+                        width: "300px",
+                      }}
+                    />
                   </ListItemButton>
                   <IconButton onClick={() => deleteNote(note.id)}>
                     <DeleteIcon />
                   </IconButton>
                 </ListItem>
               </Fade>
-              
             ))}
           </List>
         </TransitionGroup>

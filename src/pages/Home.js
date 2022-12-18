@@ -34,6 +34,8 @@ const appRoutes = [
     },
 ]
 
+const boxColor = "linear-gradient(to right, #ff7e5f, #feb47b)"
+const boxColor2 = "linear-gradient(to right, #fceabb, #f8b500)"
 export default function Home() {
     return (
         <React.Fragment>
@@ -51,7 +53,7 @@ export default function Home() {
                     {
                         appRoutes.map((item) => (
                             <Bounce left>
-                            <ListItemButton sx={{ borderRadius: '10px', bgcolor: 'background.paper', my: '20px', }} component={Link} to={item.route}>
+                            <ListItemButton sx={{ borderRadius: '10px', background:boxColor2, my: '20px', }} component={Link} to={item.route}>
                                 <ListItemIcon>
                                     {item.icon}
                                 </ListItemIcon>
