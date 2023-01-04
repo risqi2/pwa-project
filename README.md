@@ -22,7 +22,12 @@ yarn build
 serve -s build
 ```
 
-note : 
-agar PWA dapat terinstall di computer/phone ,
+note:
+1. jika saat install dependencies menggunakan npm gagal,
+gunakan yarn
+
+2. agar PWA dapat terinstall di computer/phone ,
 buka project dengan Google Chrome.
 karena mozilla firefox membutuhkan addons
+
+
