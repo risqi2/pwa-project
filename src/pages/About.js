@@ -17,26 +17,6 @@ const data = [
     nim: "195410259",
     picture: "/cat6.png",
   },
-  {
-    name: "Mawardi Janitra Hadi",
-    nim: "215410095",
-    picture: "/cat2.png",
-  },
-  {
-    name: "Akira Wahyu Saputra",
-    nim: "215410111",
-    picture: "/cat3.png",
-  },
-  {
-    name: "Steven Natanael Oey",
-    nim: "215410127",
-    picture: "/cat4.png",
-  },
-  {
-    name: "Zaki Nedhiansyah",
-    nim: "215410141",
-    picture: "/cat5.png",
-  },
 ];
 
 export default function About() {
