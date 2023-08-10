@@ -47,7 +47,7 @@ export default function Home() {
                 spacing={2}
             >
                 <Typography variant="h4" sx={{ my: '20px' }}>
-                    Welcome to simpleCalc
+                    Welcome to Calcstar
                 </Typography>
                 <List sx={{ width: '100%', maxWidth: 360, }}>
                     {

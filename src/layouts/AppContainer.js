@@ -33,7 +33,7 @@ export default function AppContainer(props) {
             <ArrowBackIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            SimpleCalc
+            Calcstar
           </Typography>
         </Toolbar>
       </AppBar>
