@@ -31,10 +31,5 @@ gunakan yarn
 buka project dengan Google Chrome.
 karena mozilla firefox membutuhkan addons
 
-anggota kelompok = 
-1. Risqi Ikhsani (195410259)
-2. Mawardi Janita Hadi (215410095)
-3. Akira Wahyu Saputra (215410111)
-4. Steven Nathanael Oel (215410127)
-5. Zaki Nerdiansyah (215410141)
+
 
